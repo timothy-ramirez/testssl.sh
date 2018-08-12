@@ -1,3 +1,7 @@
+import subprocess
+import time
+import uuid
+
 from pymongo import MongoClient
 
 
@@ -6,14 +10,21 @@ db = client['ssl-test-mongo']
 collection = db.my_results
 
 
-def handle_job(data):
+def handle_job(url):
+	start = time.time()
+	results_file = '/tmp/{}'.format(uuid.uuid4())
+	p = subprocess.Popen(['/bin/bash', './testssl.sh', '--jsonfile {}'.format(results_file), url], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+	stdout, stderr = p.communicate()
+	
+	with open(results_file) as f:
+		parsed_results = json.load(f)
+		
 	res = collection.insert_one({
 		"success": True,
-		"data": data
+		"ssltest": parsed_results
 	})
 	
 	print('{} done with {}'.format(data, res.inserted_id))
 
 	
 	
-handle_job('Some site')
