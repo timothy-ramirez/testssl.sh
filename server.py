@@ -1,2 +1,5 @@
+import os
 
-print('hello!!')
+os.system('/bin/bash ./testssl.sh')
+
+print('Done!')
