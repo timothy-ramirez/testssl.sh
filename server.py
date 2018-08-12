@@ -1,5 +1,9 @@
 import os
+from redis import Redis
+from rq import Queue
 
-os.system('/bin/bash ./testssl.sh https://www.google.com')
+q = Queue(connection=Redis(host='redis-15749.c16.us-east-1-3.ec2.cloud.redislabs.com', port=15749, password='FIq4TLlk7wlFvniLQhddCGJQtzDl8Khx'))
 
-print('Done!')
+def handle_job(data):
+	print('Handling...', data)
+
