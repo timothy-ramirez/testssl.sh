@@ -8,7 +8,7 @@ collection = db.results
 
 def handle_job(data):
 	res = collection.insert_one({
-		"success": true,
+		"success": True,
 		"data": data
 	})
 	
