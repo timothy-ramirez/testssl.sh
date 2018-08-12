@@ -1,6 +1,7 @@
 import subprocess
 import time
 import uuid
+import requests
 
 from pymongo import MongoClient
 
@@ -19,9 +20,12 @@ def handle_job(url):
 	with open(results_file) as f:
 		parsed_results = json.load(f)
 		
+	head = requests.head(url, timeout=5000)
+		
 	res = collection.insert_one({
 		"success": True,
-		"ssltest": parsed_results
+		"ssltest": parsed_results,
+		"head": {"text": head.text, "status": head.status_code}
 	})
 	
 	print('{} done with {}'.format(data, res.inserted_id))
