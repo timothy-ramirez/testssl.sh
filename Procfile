@@ -1,1 +1,1 @@
-web: echo hello
+web: python server.py
