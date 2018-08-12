@@ -14,7 +14,7 @@ collection = db.my_results
 def handle_job(url):
 	start = time.time()
 	results_file = '/tmp/{}'.format(uuid.uuid4())
-	p = subprocess.Popen(['/bin/bash', './testssl.sh', '--jsonfile {}'.format(results_file), url], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+	p = subprocess.Popen(['/bin/bash', './testssl.sh', '--jsonfile {}'.format(results_file), url])
 	stdout, stderr = p.communicate()
 	
 	with open(results_file) as f:

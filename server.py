@@ -8,7 +8,7 @@ q = Queue(connection=Redis(host='redis-15749.c16.us-east-1-3.ec2.cloud.redislabs
 
 
 result = q.enqueue(
-		 handle_job, 'http://nvie.com')
+		 handle_job, 'https://nvie.com/')
 		 
 print('Done!', result)		 
 			 
