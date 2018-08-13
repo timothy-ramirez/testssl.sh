@@ -14,7 +14,7 @@ collection = db.my_results
 def handle_job(url):
 	start = time.time()
 	
-	head = requests.head(url, timeout=5000)
+	head = requests.head(url, timeout=5)
 	
 	post_head = time.time()
 	
