@@ -28,7 +28,7 @@ def handle_job(url):
 	res = collection.insert_one({
 		"success": True,
 		"ssltest": parsed_results,
-		"head": {"text": head.headers, "status": head.status_code}.
+		"head": {"text": head.headers, "status": head.status_code},
 		"time": {
 			"start": start,
 			"post_head": post_head,
