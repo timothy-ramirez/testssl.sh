@@ -41,7 +41,7 @@ def handle_job(url):
 		}
 	})
 	
-	print('{} done with {}'.format(data, res.inserted_id))
+	print('{} done with {}'.format(url, res.inserted_id))
 
 	
 	
