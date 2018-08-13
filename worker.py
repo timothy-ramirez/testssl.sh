@@ -13,9 +13,13 @@ collection = db.my_results
 
 def handle_job(url):
 	start = time.time()
+	e = None
 	
-	head = requests.head(url, timeout=5)
-	
+	try:
+		head = requests.head(url, timeout=5, verify=False)
+	except Exception as e:
+		head = None
+		
 	post_head = time.time()
 	
 	results_file = '/tmp/{}'.format(uuid.uuid4())
@@ -28,7 +32,7 @@ def handle_job(url):
 	res = collection.insert_one({
 		"success": True,
 		"ssltest": parsed_results,
-		"head": {"text": head.headers, "status": head.status_code},
+		"head": {"text": head.headers, "status": head.status_code} if head else e,
 		"time": {
 			"start": start,
 			"post_head": post_head,
