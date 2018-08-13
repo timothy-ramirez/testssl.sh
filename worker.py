@@ -13,6 +13,11 @@ collection = db.my_results
 
 def handle_job(url):
 	start = time.time()
+	
+	head = requests.head(url, timeout=5000)
+	
+	post_head = time.time()
+	
 	results_file = '/tmp/{}'.format(uuid.uuid4())
 	p = subprocess.Popen(['/bin/bash', './testssl.sh', '--jsonfile', '{}'.format(results_file), url])
 	stdout, stderr = p.communicate()
@@ -20,12 +25,15 @@ def handle_job(url):
 	with open(results_file) as f:
 		parsed_results = json.load(f)
 		
-	head = requests.head(url, timeout=5000)
-		
 	res = collection.insert_one({
 		"success": True,
 		"ssltest": parsed_results,
-		"head": {"text": head.text, "status": head.status_code}
+		"head": {"text": head.headers, "status": head.status_code}.
+		"time": {
+			"start": start,
+			"post_head": post_head,
+			"end": time.time()
+		}
 	})
 	
 	print('{} done with {}'.format(data, res.inserted_id))
